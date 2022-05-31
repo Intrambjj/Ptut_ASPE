@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/metier/SousCategorieBasFemme.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/DAO/ProduitDAO.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/metier/CategorieProduit.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/vue/FenAccueil.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/DAO/SousCategorieDAO.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/metier/SousCategorieBasHomme.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/DAO/MySqlDAOFactory.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/DAO/CategorieProduitDAO.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/DAO/SousCategorie.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/controleur/TestFenAccueil.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/DAO/MySqlSousCategorieDAO.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/DAO/MySqlProduitDAO.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/metier/SousCategorieRobesFemme.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/DAO/MySqlCategorieProduitDAO.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/metier/SousCategorieHautsHomme.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/metier/Produit.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/metier/SousCategorieAccessoires.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/metier/SousCategorieHautsFemme.java</file>
+            <file>file:/Users/ilyassberradi/NetBeansProjects/Application%20d'administration/src/DAO/DAOFactory.java</file>
+        </group>
+    </open-files>
+</project-private>
