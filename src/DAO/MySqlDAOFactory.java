@@ -19,17 +19,9 @@ public class MySqlDAOFactory extends DAOFactory {
     public static final String PASSWORD="root";
     
     public static Connection createConnection() throws SQLException {
-        try {
-            Class.forName(DRIVER);
-            Connection connection = DriverManager.getConnection(DBURL, USER, PASSWORD);
-            connection.setAutoCommit(true);
-            return connection;
-        } catch (Exception e) {
-            System.err.println("Got an exception! ");
-            System.err.println(e.getMessage());
-            return null;
-        }
-        
+        Connection connection = DriverManager.getConnection(DBURL, USER, PASSWORD);
+        connection.setAutoCommit(true);
+        return connection;
     }
     
     public ProduitDAO getProduitDAO() {

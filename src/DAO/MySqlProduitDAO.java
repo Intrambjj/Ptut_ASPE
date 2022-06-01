@@ -21,7 +21,7 @@ public class MySqlProduitDAO implements ProduitDAO {
     public void insertProduit(Produit prod) {
         try{
             Connection conn = MySqlDAOFactory.createConnection();
-            PreparedStatement st = conn.prepareStatement("insert into product (id, nom, prix, descrption, stock, seuil_alerte) values (?,?,?,?,?,?)");
+            PreparedStatement st = conn.prepareStatement("insert into product (id, nom, prix, description, stock, seuil_alerte) values (?,?,?,?,?,?)");
             st.setInt(1, prod.getIDProduit());
             st.setString(2, prod.getLibelle());
             
@@ -87,22 +87,22 @@ public class MySqlProduitDAO implements ProduitDAO {
     public List<Produit> findProduitByLibelle(String Libelle) {
          try {
             Connection conn = MySqlDAOFactory.createConnection();
-            PreparedStatement st = conn.prepareStatement("select * from product where nom = ?");
+            PreparedStatement st = conn.prepareStatement("select * from product where UPPER(nom) = UPPER(?)");
             st.setString(1, Libelle);
             ResultSet rs =st.executeQuery();
             List<Produit> l_p = new ArrayList<Produit>();
-            Produit p = new Produit();
             
             while(rs.next()){
+                Produit p = new Produit();
                 p.setIDProduit(rs.getInt("id"));
                 p.setLibelle(rs.getString("nom"));
                 p.setPrix(rs.getDouble("prix"));
                 p.setDescription(rs.getString("description"));
                 p.setQuantiteEnStock(rs.getInt("stock"));
                 p.setSeuilAlerteStock(rs.getInt("seuil_alerte"));
-                l_p.add(p)
+                l_p.add(p);
             }
-            return p;
+            return l_p;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

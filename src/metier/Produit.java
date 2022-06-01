@@ -13,7 +13,7 @@ public class Produit implements Comparable<Object> {
     DAOFactory mysqlFactory = DAOFactory.getDAOFactory();
     private static List<Produit> listeDesProduits = new ArrayList<>();
     
-    private int IDProduit;
+    private int IDProduit;//N'OUBLIE PAS DE CHANGER LES PRIMITIFS EN OBJET WRAPPER!!!
     private static int dernierID = 10;
     private String libelle;
     private CategorieProduit categorie;
@@ -32,9 +32,7 @@ public class Produit implements Comparable<Object> {
        
    }
     
-   public Produit(int id, String libelle, String Description, double prix, int stock, int seuil_alerte){
-       
-   }
+   
     
     
     /** Le tri naturel des produits ici se fait sur le libellé

@@ -16,6 +16,12 @@ public class CategorieProduit {
     private String nom;
     public int getIDCategorie(){return this.id;}
     public String getNom(){return this.nom;}
+    public void setNom(String S){
+        nom= S;
+    }
+    public void setIDCategorie(int n){
+        id=n;
+    }
     
     private static List<CategorieProduit> l_categorie = new ArrayList<CategorieProduit>();
     

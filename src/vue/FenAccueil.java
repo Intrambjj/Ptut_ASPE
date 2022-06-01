@@ -26,6 +26,7 @@ import java.lang.String;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Iterator;
+import java.util.ListIterator;
 import javax.swing.JButton;
 import metier.CategorieProduit;
 import javax.swing.JComboBox;
@@ -46,6 +47,7 @@ public class FenAccueil extends javax.swing.JFrame {
     private ComboBoxModel<String> modeleDesCategories2;
     private static List<Produit> lesProduits;
     private List<Produit> lesProduitsTrouves;
+    private ListIterator<Produit> it;
     DAOFactory mysqlFactory = DAOFactory.getDAOFactory();
     
         
@@ -64,6 +66,7 @@ public class FenAccueil extends javax.swing.JFrame {
     //Q3)L'un de ses events change et ne reste plus <none>
         initComponents();
         butt_suivant.setVisible(false);
+        butt_precedent.setVisible(false);
         /*Produit p1 = new Produit("Tunique blanche à fleurs manches longues",
                 CategorieProduit.HFE, "Chemisiers / Blouses",
                 "Tissu coton bio ajouré avec dentelles", false, 1, false, 42.50, 35.00,
@@ -249,6 +252,7 @@ public class FenAccueil extends javax.swing.JFrame {
         tf_qte = new javax.swing.JTextField();
         butt_modifier = new javax.swing.JButton();
         butt_ajouter = new javax.swing.JButton();
+        butt_precedent = new javax.swing.JButton();
         butt_suivant = new javax.swing.JButton();
         pannPromotions = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -685,8 +689,21 @@ public class FenAccueil extends javax.swing.JFrame {
             }
         });
 
+        butt_precedent.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        butt_precedent.setText("<<");
+        butt_precedent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butt_precedentActionPerformed(evt);
+            }
+        });
+
         butt_suivant.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        butt_suivant.setText("Suivant");
+        butt_suivant.setText(">>");
+        butt_suivant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butt_suivantActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pannProduitsLayout = new javax.swing.GroupLayout(pannProduits);
         pannProduits.setLayout(pannProduitsLayout);
@@ -702,13 +719,15 @@ public class FenAccueil extends javax.swing.JFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(pannProduitsLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(51, 51, 51)
+                .addComponent(butt_precedent, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(butt_modifier)
-                .addGap(28, 28, 28)
-                .addComponent(butt_suivant)
-                .addGap(28, 28, 28)
+                .addGap(128, 128, 128)
                 .addComponent(butt_ajouter)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(210, 210, 210)
+                .addComponent(butt_suivant, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
         );
         pannProduitsLayout.setVerticalGroup(
             pannProduitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -719,10 +738,11 @@ public class FenAccueil extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44)
+                .addGap(41, 41, 41)
                 .addGroup(pannProduitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(butt_modifier)
                     .addComponent(butt_ajouter)
+                    .addComponent(butt_precedent)
                     .addComponent(butt_suivant))
                 .addGap(88, 88, 88))
         );
@@ -1607,11 +1627,11 @@ public class FenAccueil extends javax.swing.JFrame {
             ProduitDAO prodDAO = mysqlFactory.getProduitDAO();
             Produit p = prodDAO.findProduitById(Integer.parseInt(tf_id_rech.getText()));
             tf_id_pd.setText(tf_id_rech.getText());
-            cbb_categorie_pd.setSelectedItem(p.getCategorie());
+            //cbb_categorie_pd.setSelectedItem(p.getCategorie());
             tf_libelle_pd.setText(p.getLibelle());
             ta_description.setText(p.getDescription());
             tf_prix.setText(Double.toString(p.getPrix()));
-            tf_prix_reduit.setText(Double.toString(p.getPrixPromoDouble()));
+            //tf_prix_reduit.setText(Double.toString(p.getPrixPromoDouble()));
             if(p.isEnPromo())
                 tf_promotion.setText("Oui");
             else
@@ -1622,19 +1642,25 @@ public class FenAccueil extends javax.swing.JFrame {
         
         else if(tf_libelle.getText()!=null && !(tf_libelle.getText().equals(""))){
             ProduitDAO prodDAO = mysqlFactory.getProduitDAO();
-            Produit p = prodDAO.findProduitById(Integer.parseInt(tf_id_rech.getText()));
-            tf_id_pd.setText(tf_id_rech.getText());
-            cbb_categorie_pd.setSelectedItem(p.getCategorie());
+            it= prodDAO.findProduitByLibelle(tf_libelle.getText()).listIterator();
+            Produit p = it.next();
+            tf_id_pd.setText(Integer.toString(p.getIDProduit()));
+            //cbb_categorie_pd.setSelectedItem(p.getCategorie());
             tf_libelle_pd.setText(p.getLibelle());
             ta_description.setText(p.getDescription());
             tf_prix.setText(Double.toString(p.getPrix()));
-            tf_prix_reduit.setText(Double.toString(p.getPrixPromoDouble()));
+            //tf_prix_reduit.setText(Double.toString(it.next().getPrixPromoDouble()));
             if(p.isEnPromo())
                 tf_promotion.setText("Oui");
             else
                 tf_promotion.setText("Non");
             tf_qte.setText(Integer.toString(p.getQuantiteEnStock()));
             tf_seuil.setText(Integer.toString(p.getSeuilAlerteStock()));
+            if(prodDAO.findProduitByLibelle(tf_libelle.getText()).size()>1){
+                butt_suivant.setVisible(true);
+                butt_precedent.setVisible(true);
+            }
+            
         }
             
         /*int i=0;
@@ -1675,10 +1701,56 @@ public class FenAccueil extends javax.swing.JFrame {
         }*/
     }//GEN-LAST:event_bt_rechercherActionPerformed
 
+    private void butt_suivantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butt_suivantActionPerformed
+        // TODO add your handling code here:
+        if(it.hasNext()){
+            
+            Produit p = it.next();
+            if(!(it.hasNext()))
+                it.previous();
+            tf_id_pd.setText(Integer.toString(p.getIDProduit()));
+            //cbb_categorie_pd.setSelectedItem(p.getCategorie());
+            tf_libelle_pd.setText(p.getLibelle());
+            ta_description.setText(p.getDescription());
+            tf_prix.setText(Double.toString(p.getPrix()));
+            //tf_prix_reduit.setText(Double.toString(it.next().getPrixPromoDouble()));
+            if(p.isEnPromo())
+                tf_promotion.setText("Oui");
+            else
+                tf_promotion.setText("Non");
+            tf_qte.setText(Integer.toString(p.getQuantiteEnStock()));
+            tf_seuil.setText(Integer.toString(p.getSeuilAlerteStock()));
+            
+        }
+    }//GEN-LAST:event_butt_suivantActionPerformed
+
+    private void butt_precedentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butt_precedentActionPerformed
+        // TODO add your handling code here:
+        if(it.hasPrevious()){
+            
+            Produit p= it.previous();
+            if(!(it.hasPrevious()))
+                it.next();
+            tf_id_pd.setText(Integer.toString(p.getIDProduit()));
+            //cbb_categorie_pd.setSelectedItem(p.getCategorie());
+            tf_libelle_pd.setText(p.getLibelle());
+            ta_description.setText(p.getDescription());
+            tf_prix.setText(Double.toString(p.getPrix()));
+            //tf_prix_reduit.setText(Double.toString(it.next().getPrixPromoDouble()));
+            if(p.isEnPromo())
+                tf_promotion.setText("Oui");
+            else
+                tf_promotion.setText("Non");
+            tf_qte.setText(Integer.toString(p.getQuantiteEnStock()));
+            tf_seuil.setText(Integer.toString(p.getSeuilAlerteStock()));
+            
+        }
+    }//GEN-LAST:event_butt_precedentActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) throws SQLException {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1723,6 +1795,7 @@ public class FenAccueil extends javax.swing.JFrame {
     private javax.swing.JButton bt_rechercher;
     private javax.swing.JButton butt_ajouter;
     private javax.swing.JButton butt_modifier;
+    private javax.swing.JButton butt_precedent;
     private javax.swing.JButton butt_suivant;
     private javax.swing.JComboBox<String> cbb_categorie;
     private javax.swing.JComboBox<String> cbb_categorie_pd;

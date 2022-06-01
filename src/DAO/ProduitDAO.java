@@ -17,7 +17,7 @@ public interface ProduitDAO {
     //public boolean deleteProduit();
     public Produit findProduitById(int id);
     public List<Produit> findProduitByLibelle(String Libelle);
-    public void updateProduit(Produit produit);
+    public void updateProduit(int id, String NewNom, double newPrix, String NewDescription, int newStock, int newSeuil);
     
     
 }

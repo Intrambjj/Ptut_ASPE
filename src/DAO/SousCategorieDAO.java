@@ -6,6 +6,7 @@ package DAO;
 
 import java.util.List;
 import metier.CategorieProduit;
+import metier.SousCategorie;
 
 
 /**
@@ -15,7 +16,7 @@ import metier.CategorieProduit;
 public interface SousCategorieDAO {
     public void insertSousCategorie();
     //public boolean deleteSousCategorie();
-    public void findSousCategorie(CategorieProduit cat);
+    public List<SousCategorie> findSousCategoriesByCategorie(CategorieProduit cat);
     //public boolean updateSousCategorie();
     //public List<SousCategorie> selectSousCategorie();
 }
