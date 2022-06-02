@@ -35,7 +35,7 @@ public class CategorieProduit {
         return l;
     }
     
-    public static CategorieProduit getCategorieFromString(String s) {
+    /*public static CategorieProduit getCategorieFromString(String s) {
         
         for (CategorieProduit b : l_categorie) {
             if (b.getNom().equalsIgnoreCase(s)) {
@@ -43,5 +43,5 @@ public class CategorieProduit {
             }
         }
         return null; 
-    }
+    }*/
 }

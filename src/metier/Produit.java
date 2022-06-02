@@ -16,7 +16,7 @@ public class Produit implements Comparable<Object> {
     private int IDProduit;//N'OUBLIE PAS DE CHANGER LES PRIMITIFS EN OBJET WRAPPER!!!
     private static int dernierID = 10;
     private String libelle;
-    private CategorieProduit categorie;
+    private String categorie;
     private String sousCategorie; // gérée sous forme de String car varie selon la catégorie
     private String description;
     private boolean lot; // si vendu en lot, par exemple 3 paires de chaussettes
@@ -139,11 +139,11 @@ public class Produit implements Comparable<Object> {
         this.libelle = libelle;
     }
 
-    public CategorieProduit getCategorie() {
+    public String getCategorie() {
         return categorie;
     }
 
-    public void setCategorie(CategorieProduit categorie) {
+    public void setCategorie(String categorie) {
         this.categorie = categorie;
     }
 

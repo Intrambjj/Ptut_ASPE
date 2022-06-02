@@ -4,10 +4,12 @@
  */
 package vue;
 
+import DAO.CategorieProduitDAO;
 import DAO.DAOFactory;
 import DAO.MySqlDAOFactory;
 import DAO.MySqlProduitDAO;
 import DAO.ProduitDAO;
+import DAO.SousCategorieDAO;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,8 +32,9 @@ import java.util.ListIterator;
 import javax.swing.JButton;
 import metier.CategorieProduit;
 import javax.swing.JComboBox;
-import static metier.CategorieProduit.getCategorieFromString;
+//import static metier.CategorieProduit.getCategorieFromString;
 import metier.SousCategorie;
+import java.sql.SQLException;
 
 /**
  *
@@ -52,12 +55,12 @@ public class FenAccueil extends javax.swing.JFrame {
     
         
     public FenAccueil() {
+        CategorieProduitDAO CatDAO = mysqlFactory.getCategorieProduitDAO();
         
         
         
         
-        
-        Object[] tabCategories = CategorieProduit.getLesCategoriesProduit().toArray();
+        Object[] tabCategories = CatDAO.listCategorieProduit().toArray();
         modeleDesCategories=new DefaultComboBoxModel(tabCategories);
         modeleDesSousCategories = new DefaultComboBoxModel<String>();
         modeleDesCategories2=new DefaultComboBoxModel(tabCategories);
@@ -164,7 +167,7 @@ public class FenAccueil extends javax.swing.JFrame {
     }
     
     
-    private void resultatRecherche(int i){
+    /*private void resultatRecherche(int i){
         if(!(tf_id_rech.getText().equals("")) && lesProduits.get(i).getIDProduit()==Integer.parseInt(tf_id_rech.getText())){
                 tf_id_pd.setText(tf_id_rech.getText());
                 cbb_categorie_pd.setSelectedItem(lesProduits.get(i).getCategorie());
@@ -197,7 +200,7 @@ public class FenAccueil extends javax.swing.JFrame {
             }
             else
                 System.out.println("Exception");
-    }
+    }*/
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -680,6 +683,11 @@ public class FenAccueil extends javax.swing.JFrame {
 
         butt_modifier.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         butt_modifier.setText("Modifier");
+        butt_modifier.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                butt_modifierActionPerformed(evt);
+            }
+        });
 
         butt_ajouter.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         butt_ajouter.setText("Ajouter");
@@ -1474,18 +1482,39 @@ public class FenAccueil extends javax.swing.JFrame {
 
     private void cbb_categorieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_categorieActionPerformed
         // TODO add your handling code here:
+        SousCategorieDAO SousCatDAO = mysqlFactory.getSousCategorieDAO();
         String laCategorie = (String) cbb_categorie.getSelectedItem();
-        this.affecterDetailCBBox(laCategorie, cbb_sousCategorie);
+        
+        Object[] tabNoms;
+        tabNoms = SousCatDAO.findSousCategoriesByCategorie(laCategorie).toArray();
+        modeleDesSousCategories = new DefaultComboBoxModel(tabNoms);
+        
+        
+        
+        cbb_sousCategorie.setModel(modeleDesSousCategories);
+        //this.affecterDetailCBBox(laCategorie, cbb_sousCategorie);
         /*Q5) on va utiliser
         une fonction qui renvoie la combobox des sous-categories en foction de la categorie choisie*/
     }//GEN-LAST:event_cbb_categorieActionPerformed
 
     private void bt_effacerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bt_effacerActionPerformed
         // TODO add your handling code here:
-        tf_libelle.setText("");
-        cbb_categorie.setSelectedItem("Accessoires");
-        cbb_sousCategorie.setSelectedItem(null);
-        
+        tf_id_rech.setText(null);
+        tf_libelle.setText(null);
+        cbb_categorie.setSelectedIndex(0);
+        cbb_sousCategorie.removeAllItems();
+        cbb_categorie_pd.setSelectedIndex(0);
+        cbb_sousCategorie_pd.removeAllItems();
+        tf_libelle_pd.setText(null);
+        tf_id_pd.setText(null);
+        tf_prix.setText(null);
+        tf_prix_reduit.setText(null);
+        tf_promotion.setText(null);
+        tf_qte.setText(null);
+        tf_seuil.setText(null);
+        ta_description.setText(null);
+        butt_suivant.setVisible(false);
+        butt_precedent.setVisible(false);
     }//GEN-LAST:event_bt_effacerActionPerformed
 
     private void gestion_promotionsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gestion_promotionsActionPerformed
@@ -1544,9 +1573,18 @@ public class FenAccueil extends javax.swing.JFrame {
 
     private void cbb_categorie_pdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbb_categorie_pdActionPerformed
         // TODO add your handling code here:
-        String laCategorie = (String) cbb_categorie_pd.getSelectedItem();
+        /*String laCategorie = (String) cbb_categorie_pd.getSelectedItem();
         this.affecterDetailCBBox(laCategorie, cbb_sousCategorie_pd);
+        SousCategorieDAO SousCatDAO = mysqlFactory.getSousCategorieDAO();
+        String laCategorie = (String) cbb_categorie_pd.getSelectedItem();
+        SousCatDAO.findSousCategoriesByCategorie(laCategorie);*/
+        SousCategorieDAO SousCatDAO = mysqlFactory.getSousCategorieDAO();
+        String laCategorie = (String) cbb_categorie_pd.getSelectedItem();
         
+        Object[] tabNoms;
+        tabNoms = SousCatDAO.findSousCategoriesByCategorie(laCategorie).toArray();
+        modeleDesSousCategories = new DefaultComboBoxModel(tabNoms);
+        cbb_sousCategorie_pd.setModel(modeleDesSousCategories);
     }//GEN-LAST:event_cbb_categorie_pdActionPerformed
 
     private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
@@ -1659,9 +1697,12 @@ public class FenAccueil extends javax.swing.JFrame {
             if(prodDAO.findProduitByLibelle(tf_libelle.getText()).size()>1){
                 butt_suivant.setVisible(true);
                 butt_precedent.setVisible(true);
-            }
-            
+            }                    
+                
         }
+        
+        else
+            System.out.println("Exception");
             
         /*int i=0;
         while(i<lesProduits.size() && tf_id_pd.getText().equals("")){
@@ -1747,10 +1788,21 @@ public class FenAccueil extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_butt_precedentActionPerformed
 
+    private void butt_modifierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_butt_modifierActionPerformed
+        // TODO add your handling code here:
+        ProduitDAO prodDAO = mysqlFactory.getProduitDAO();
+        if(prodDAO.findProduitById(Integer.parseInt(tf_id_pd.getText()))==null)
+            System.out.println("Produit non existant");
+        else{
+            prodDAO.updateProduit(Integer.parseInt(tf_id_pd.getText()), tf_libelle_pd.getText()
+                    , Double.parseDouble(tf_prix.getText()), ta_description.getText(), Integer.parseInt(tf_qte.getText()), Integer.parseInt(tf_seuil.getText()));
+        }
+    }//GEN-LAST:event_butt_modifierActionPerformed
+
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String args[]){
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.

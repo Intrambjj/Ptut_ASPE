@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import java.sql.SQLException;
 import java.util.List;
 import metier.CategorieProduit;
 
@@ -13,7 +14,8 @@ import metier.CategorieProduit;
  * @author ilyassberradi
  */
 public interface CategorieProduitDAO {
-    public void insertCategorieProduit();
+    public void insertCategorieProduit(CategorieProduit Cat);
+    public List<String> listCategorieProduit();
     //public boolean deleteCategorieProduit();
     //public CategorieProduit findCategorieProduit(String nom);
     //public boolean updateCategorieProduit();

@@ -7,6 +7,7 @@ package DAO;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import metier.CategorieProduit;
@@ -23,51 +24,59 @@ import metier.SousCategorieBasFemme;
 public class MySqlSousCategorieDAO implements SousCategorieDAO {
 
     @Override
-    public void insertSousCategorie() {
+    public void insertSousCategorie(SousCategorie S_cat) {
+        Connection conn = null;
         try {
-            Connection conn = MySqlDAOFactory.createConnection();
-            for(String s : SousCategorieAccessoires.getLesAccessoires()){
-                PreparedStatement st = conn.prepareStatement("insert into souscategorie (id_categorie, nom_sous_categorie) values (?,?)");
-                st.setInt(1, 1);
-                st.setString(2, s);
-                st.execute();
-                System.out.println(s+" saved into the database");
-            }
-            for(String s : SousCategorieBasFemme.getLesBas()){
-                PreparedStatement st = conn.prepareStatement("insert into souscategorie (id_categorie, nom_sous_categorie) values (?,?)");
-                st.setInt(1, 2);
-                st.setString(2, s);
-                st.execute();
-                System.out.println(s+" saved into the database");
-            }
+            conn = MySqlDAOFactory.createConnection();
             
-        } catch (Exception e) {
-            e.printStackTrace();
+            PreparedStatement st = conn.prepareStatement("insert into souscategorie (id_categorie, nom_sous_categorie) values (?,?)");
+            st.setInt(1, S_cat.getIDCategorieDeSousCategorie());
+            st.setString(2, S_cat.getNomSousCategorie());
+            st.execute();
+            System.out.println(S_cat.getNomSousCategorie()+" saved into the database");
+            
+            
+            
+        } catch (SQLException e) {
+            while (e != null) {
+                System.out.println(e.getSQLState());
+                System.out.println(e.getMessage());
+                System.out.println(e.getErrorCode());
+                e = e.getNextException();
+            }
             System.out.println("unable to save the sous-categorie");
+        } finally{       
+            if (conn != null) { try { conn.close(); } catch (SQLException e) {} conn = null;} 
         }
     }
 
     @Override
-    public List<SousCategorie> findSousCategoriesByCategorie(CategorieProduit cat) {
+    public List<String> findSousCategoriesByCategorie(String s_cat){
+        Connection conn = null;
         try {
-            Connection conn = MySqlDAOFactory.createConnection();
-            PreparedStatement st = conn.prepareStatement("select * from souscategorie where id_categorie = ?");
-            st.setInt(1, cat.getIDCategorie());
+            conn = MySqlDAOFactory.createConnection();
+            PreparedStatement st = conn.prepareStatement("select nom_sous_categorie from souscategorie sc, categorie c where c.nom = ? and c.id=sc.id_categorie");
+            st.setString(1, s_cat);
             ResultSet rs =st.executeQuery();
-            List<SousCategorie> l_sc = new ArrayList<SousCategorie>();
+            List<String> l_sc = new ArrayList<String>();
             
             while(rs.next()){
-                SousCategorie sc = new SousCategorie();
-                sc.setIDSousCategorie(rs.getInt("id_sous_categorie"));
-                sc.setIDCategorieDeSousCategorie(rs.getInt("id_categorie"));
-                sc.setNomSousCategorie(rs.getString("nom_sous_categorie"));
-                l_sc.add(sc);
+                String s = new String(rs.getString("nom_sous_categorie"));
+                
+                l_sc.add(s);
             }
             return l_sc;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            while (e != null) {
+                System.out.println(e.getSQLState());
+                System.out.println(e.getMessage());
+                System.out.println(e.getErrorCode());
+                e = e.getNextException();
+            }
             System.out.println("unable to find the product");
             return null;
+        } finally{       
+            if (conn != null) { try { conn.close(); } catch (SQLException e) {} conn = null;} 
         }
     }
     

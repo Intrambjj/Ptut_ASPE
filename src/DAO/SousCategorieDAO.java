@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import java.sql.SQLException;
 import java.util.List;
 import metier.CategorieProduit;
 import metier.SousCategorie;
@@ -14,9 +15,9 @@ import metier.SousCategorie;
  * @author ilyassberradi
  */
 public interface SousCategorieDAO {
-    public void insertSousCategorie();
+    public void insertSousCategorie(SousCategorie S_cat);
     //public boolean deleteSousCategorie();
-    public List<SousCategorie> findSousCategoriesByCategorie(CategorieProduit cat);
+    public List<String> findSousCategoriesByCategorie(String s_cat);
     //public boolean updateSousCategorie();
     //public List<SousCategorie> selectSousCategorie();
 }

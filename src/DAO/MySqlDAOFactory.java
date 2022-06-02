@@ -14,7 +14,7 @@ import java.sql.DriverManager;
  */
 public class MySqlDAOFactory extends DAOFactory {
     public static final String DRIVER= "com.mariadb.jdbc.Driver";
-    public static final String DBURL="jdbc:mariadb://localhost:8889/ptut";
+    public static final String DBURL="jdbc:mariadb://localhost:8889/ptut2";
     public static final String USER="root";
     public static final String PASSWORD="root";
     

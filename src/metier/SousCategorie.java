@@ -31,7 +31,7 @@ public class SousCategorie {
         id_categorie=n;
     }
     
-    public static List<String> getLesSousCategories(String categorie){
+    /*public static List<String> getLesSousCategories(String categorie){
         List<String> l_SousCategorie_Categorie = new ArrayList<String>();
         
         for(SousCategorie Sc :l_SousCategorie){
@@ -41,7 +41,7 @@ public class SousCategorie {
             }
             
         }
-        return l_SousCategorie_Categorie;}
+        return l_SousCategorie_Categorie;}*/
     
     
     

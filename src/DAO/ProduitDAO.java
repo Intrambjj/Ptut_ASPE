@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import java.sql.SQLException;
 import java.util.List;
 import metier.Produit;
 
@@ -18,6 +19,7 @@ public interface ProduitDAO {
     public Produit findProduitById(int id);
     public List<Produit> findProduitByLibelle(String Libelle);
     public void updateProduit(int id, String NewNom, double newPrix, String NewDescription, int newStock, int newSeuil);
+    public List<Produit> findProduitBySousCategorie(String sous_cat);
     
     
 }
