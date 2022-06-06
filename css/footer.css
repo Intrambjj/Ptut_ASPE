@@ -1,0 +1,116 @@
+/* css pour le footer */ 
+
+footer {
+    position: relative;
+    width: 100%;
+    padding: 40px 10vw;
+    padding-bottom: 80px;
+    background: #383838;
+}
+
+.footer-content{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 80px;
+}
+
+.footer-content .logo{
+    height: 160px;
+}
+
+.footer-pres{
+    width: 50%;
+    
+}
+
+.footer-title{
+    text-transform: capitalize;
+    color:#fff;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
+.info{
+    text-align: justify;
+    color: rgba(255, 255, 255, 1);   
+}
+
+.info a{
+    color: #a9a9a9;
+}
+
+.contact {
+    color:#fff;
+    margin: 20px 0;
+}
+
+.footer-social-container {
+    margin-top: 40px;
+    display:flex;
+    justify-content: space-between;
+}
+
+.social-link{
+    color: rgba(255, 255, 255, 0.75);
+    margin-left: 20px;
+    text-transform: capitalize;
+    
+}
+
+.social-link:nth-child(1){
+    margin-left: 0px;
+}
+
+.social-link:hover{
+    color: rgba(255, 255, 255, 1);
+}
+
+.footer-credit{
+    width: 100%;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    text-align: center;
+    color:#fff;
+    background:rgba(0, 0, 0, 0.2);
+}
+
+@media screen and (max-width:800px) {
+    footer{
+        padding: 40px 5vw;
+    }
+
+    .footer-content .logo{
+        height: 100px;
+    }
+
+    .footer-content{
+        align-items: center;
+        margin-bottom: 40px;
+    }
+
+    .info{
+        font-size: 10px;
+    }
+
+    .footer-title{
+        font-size: 15px;
+    }
+
+    .contact{
+        font-size: 15px;
+        margin: 15px 0;
+    }
+
+    .social-content{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .social-link{
+        margin: 0 0;
+    }
+}
