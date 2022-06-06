@@ -16,6 +16,7 @@ public class Produit implements Comparable<Object> {
     private int IDProduit;//N'OUBLIE PAS DE CHANGER LES PRIMITIFS EN OBJET WRAPPER!!!
     private static int dernierID = 10;
     private String libelle;
+    private String modele;
     private String categorie;
     private String sousCategorie; // gérée sous forme de String car varie selon la catégorie
     private String description;
@@ -137,6 +138,14 @@ public class Produit implements Comparable<Object> {
 
     public void setLibelle(String libelle) {
         this.libelle = libelle;
+    }
+    
+    public String getModele() {
+        return modele;
+    }
+
+    public void setModele(String modele) {
+        this.modele = modele;
     }
 
     public String getCategorie() {

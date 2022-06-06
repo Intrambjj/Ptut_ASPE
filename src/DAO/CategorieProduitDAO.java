@@ -14,10 +14,10 @@ import metier.CategorieProduit;
  * @author ilyassberradi
  */
 public interface CategorieProduitDAO {
-    public void insertCategorieProduit(CategorieProduit Cat);
+    public void insertCategorieProduit(String Cat);
     public List<String> listCategorieProduit();
-    //public boolean deleteCategorieProduit();
-    //public CategorieProduit findCategorieProduit(String nom);
-    //public boolean updateCategorieProduit();
+    public int deleteCategorieProduit(String cat);
+    public CategorieProduit findCategorieProduit(String nom);
+    public int updateCategorieProduit(String cat, int id);
     //public List<CategorieProduit> selectCategorieProduit();
 }

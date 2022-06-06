@@ -15,9 +15,11 @@ import metier.SousCategorie;
  * @author ilyassberradi
  */
 public interface SousCategorieDAO {
-    public void insertSousCategorie(SousCategorie S_cat);
+    public int insertSousCategorie(String S_cat, String cat);
+    public int deleteSousCategorie(String S_cat, String cat);
+    public SousCategorie findSousCategorie(String S_cat);
     //public boolean deleteSousCategorie();
     public List<String> findSousCategoriesByCategorie(String s_cat);
-    //public boolean updateSousCategorie();
+    public int updateSousCategorie(String s, int id);
     //public List<SousCategorie> selectSousCategorie();
 }
